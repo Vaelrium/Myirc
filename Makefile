@@ -5,7 +5,7 @@
 ## Login   <durand_u@epitech.net>
 ## 
 ## Started on  Mon Apr  6 12:44:38 2015 Rémi DURAND
-## Last update Mon Apr  6 12:49:22 2015 Rémi DURAND
+## Last update Mon Apr  6 12:57:48 2015 Ambroise Coutarel
 ##
 
 SRC_SERVER      =       ./server_dir/irc.c                   \
@@ -21,7 +21,7 @@ OBJ_SERVER      =       $(SRC_SERVER:.c=.o)
 
 #OBJ_CLIENT      =       $(SRC_CLIENT:.c=.o)
 
-NAME_SERVER     =       serveur
+NAME_SERVER     =       server
 
 #NAME_CLIENT     =       client
 
