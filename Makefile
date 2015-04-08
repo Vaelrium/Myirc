@@ -5,11 +5,12 @@
 ## Login   <durand_u@epitech.net>
 ## 
 ## Started on  Mon Apr  6 12:44:38 2015 Rémi DURAND
-## Last update Mon Apr  6 12:57:48 2015 Ambroise Coutarel
+## Last update Wed Apr  8 15:30:41 2015 Ambroise Coutarel
 ##
 
 SRC_SERVER      =       ./server_dir/irc.c                   \
 			./server_dir/init.c                   \
+			./server_dir/client_handler.c
 
 #SRC_CLIENT      =
 
@@ -25,7 +26,7 @@ NAME_SERVER     =       server
 
 #NAME_CLIENT     =       client
 
-CFLAGS          +=      -Wall -Wextra -Werror
+CFLAGS          +=      -Wall -Wextra -Werror -g3
 
 all: $(NAME_SERVER)# $(NAME_CLIENT)
 
@@ -36,9 +37,10 @@ $(NAME_SERVER): $(OBJ_SERVER)
 #	$(CC) -o $(NAME_CLIENT) $(OBJ_CLIENT) $(CFLAGS)
 
 clean:
-	$(RM) $(OBJ_SERVER)# $(OBJ_CLIENT)
+	$(RM) $(OBJ_SERVER) 
+# $(OBJ_CLIENT)
 
 fclean: clean
-	$(RM) $(NAME_SERVER)# $(NAME_CLIENT)
+	$(RM) $(NAME_SERVER) # $(NAME_CLIENT)
 
 re: fclean all
