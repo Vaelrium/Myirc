@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:45 2015 Rémi DURAND
-** Last update Wed Apr  8 14:17:12 2015 Ambroise Coutarel
+** Last update Wed Apr  8 15:07:48 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -28,7 +28,6 @@ int	main(int ac, char **av)
   cdata.fct_read[sfd] = server_read;
   cdata.fct_write[sfd] = server_write;
   printf("sfd = %d\n", sfd);
-  while (init_cli(&cdata) == 0)
-    ;
+  init_cli(&cdata);
   return (0);
 }

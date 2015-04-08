@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:43:25 2015 Rémi DURAND
-** Last update Wed Apr  8 14:35:00 2015 Ambroise Coutarel
+** Last update Wed Apr  8 15:14:11 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -27,6 +27,7 @@ void		client_read(t_cfds *e, int fd, fd_set *set)
 {
   int		r;
   char		buf[4096];
+  char		id[15];
   int		i;
 
   printf("reading from %d\n", fd);
@@ -39,7 +40,11 @@ void		client_read(t_cfds *e, int fd, fd_set *set)
       while (i < NB_QUE)
 	{
 	  if (FD_ISSET(i, set) && i != fd)
-	    write(i, buf, r);
+	    {
+	      sprintf(id, "%d : ", i);
+	      write(i, id, strlen(id));
+	      write(i, buf, r);
+	    }
 	  ++i;
 	}
     }
@@ -143,15 +148,13 @@ int			init_cli(t_cfds *cdata)
       FD_ZERO(&cdata->fd_w);
       cdata->ncfd = 0;
       init_set(cdata, &tv);
-      printf("finished set init\n");
       if (select(cdata->ncfd + 1, &cdata->fd_r, &cdata->fd_w, NULL, &tv) == -1)
 	perror("select");
       while (v < NB_QUE)
 	{
-	  printf("%d\n", v);
 	  if (FD_ISSET(v, &cdata->fd_r))
 	    {
-	      cdata->fct_read[v](&cdata, v, &cdata->fd_w);
+	      cdata->fct_read[v](cdata, v, &cdata->fd_w);
 	    }
 	  ++v;
 	}
