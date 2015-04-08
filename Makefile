@@ -5,7 +5,7 @@
 ## Login   <durand_u@epitech.net>
 ## 
 ## Started on  Mon Apr  6 12:44:38 2015 Rémi DURAND
-## Last update Wed Apr  8 15:30:41 2015 Ambroise Coutarel
+## Last update Wed Apr  8 15:45:47 2015 Ambroise Coutarel
 ##
 
 SRC_SERVER      =       ./server_dir/irc.c                   \
@@ -41,6 +41,7 @@ clean:
 # $(OBJ_CLIENT)
 
 fclean: clean
-	$(RM) $(NAME_SERVER) # $(NAME_CLIENT)
+	$(RM) $(NAME_SERVER) 
+# $(NAME_CLIENT)
 
 re: fclean all
