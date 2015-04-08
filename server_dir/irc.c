@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:45 2015 Rémi DURAND
-** Last update Wed Apr  8 13:45:53 2015 Rémi DURAND
+** Last update Wed Apr  8 14:17:12 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -17,6 +17,7 @@ int	main(int ac, char **av)
   int                   sfd;
   t_cfds		cdata;
 
+  memset(cdata.fd_type, FD_FREE, NB_QUE);
   if ((ac != 2 && printf("No port\n")) || init_serv(&pe, av, &s_in) == (-1))
     return (-1);
   if ((sfd = socket(AF_INET, SOCK_STREAM, pe->p_proto)) == (-1) ||
@@ -26,6 +27,7 @@ int	main(int ac, char **av)
   cdata.fd_type[sfd] = FD_SERVER;
   cdata.fct_read[sfd] = server_read;
   cdata.fct_write[sfd] = server_write;
+  printf("sfd = %d\n", sfd);
   while (init_cli(&cdata) == 0)
     ;
   return (0);

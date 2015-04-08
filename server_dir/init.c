@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:43:25 2015 Rémi DURAND
-** Last update Wed Apr  8 13:51:32 2015 Rémi DURAND
+** Last update Wed Apr  8 14:35:00 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -29,6 +29,7 @@ void		client_read(t_cfds *e, int fd, fd_set *set)
   char		buf[4096];
   int		i;
 
+  printf("reading from %d\n", fd);
   r = read(fd, buf, 4096);
   if (r > 0)
     {
@@ -111,15 +112,13 @@ void		server_write(t_cfds *cdata, int fd, fd_set writefds)
   (void)writefds;
 }
 
-void			init_set(t_cfds *cdata)
+void			init_set(t_cfds *cdata, struct timeval *tv)
 {
   int			v;
-  struct timeval	tv;
 
   v = 0;
-  tv.tv_sec = 20;
-  tv.tv_usec = 0;
-  memset(cdata->fd_type, FD_FREE, NB_QUE);
+  tv->tv_sec = 20;
+  tv->tv_usec = 0;
   while (v < NB_QUE)
     {
       if (cdata->fd_type[v] != FD_FREE)
@@ -130,24 +129,32 @@ void			init_set(t_cfds *cdata)
 	}
       ++v;
     }
-  if (select(cdata->ncfd + 1, &cdata->fd_r, &cdata->fd_w, NULL, &tv) == -1)
-    perror("select");
 }
 
-int		init_cli(t_cfds *cdata)
+int			init_cli(t_cfds *cdata)
 {
-  int		v;
+  struct timeval	tv;
+  int			v;
 
-  v = 0;
-  FD_ZERO(&cdata->fd_r);
-  FD_ZERO(&cdata->fd_w);
-  cdata->ncfd = 0;
-  init_set(cdata);
-  while (v < NB_QUE)
+  while (1)
     {
-      if (FD_ISSET(v, &cdata->fd_r))
-	cdata->fct_read[v](&cdata, v, &cdata->fd_w);
-      ++v;
+      v = 0;
+      FD_ZERO(&cdata->fd_r);
+      FD_ZERO(&cdata->fd_w);
+      cdata->ncfd = 0;
+      init_set(cdata, &tv);
+      printf("finished set init\n");
+      if (select(cdata->ncfd + 1, &cdata->fd_r, &cdata->fd_w, NULL, &tv) == -1)
+	perror("select");
+      while (v < NB_QUE)
+	{
+	  printf("%d\n", v);
+	  if (FD_ISSET(v, &cdata->fd_r))
+	    {
+	      cdata->fct_read[v](&cdata, v, &cdata->fd_w);
+	    }
+	  ++v;
+	}
     }
   return (0);
 }

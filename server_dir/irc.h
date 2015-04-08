@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:14 2015 Rémi DURAND
-** Last update Wed Apr  8 13:46:00 2015 Rémi DURAND
+** Last update Wed Apr  8 14:09:22 2015 Ambroise Coutarel
 */
 
 #ifndef _IRC_H_
