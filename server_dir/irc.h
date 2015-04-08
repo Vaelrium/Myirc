@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:14 2015 Rémi DURAND
-** Last update Tue Apr  7 14:22:14 2015 Rémi DURAND
+** Last update Wed Apr  8 13:46:00 2015 Rémi DURAND
 */
 
 #ifndef _IRC_H_
@@ -28,20 +28,29 @@
 # include <dirent.h>
 
 # define NB_QUE 512
+# define FD_FREE 0
+# define FD_CLIENT 1
+# define FD_SERVER 2
 
 typedef const struct sockaddr *	caddr_c;
 typedef struct sockaddr *	addr_c;
+typedef				void(*fct)();
 
 typedef struct	s_cfds
 {
-  int		nfds;
-  int		fds[512];
-  fd_set	set;
-  int		of;
+  char		fd_type[NB_QUE];
+  fct		fct_read[NB_QUE];
+  fct		fct_write[NB_QUE];
+  int		port;
+  fd_set	fd_r;
+  fd_set	fd_w;
+  int		ncfd;
 }		t_cfds;
 
 int		init_serv(struct protoent **pe, char **av,
 			  struct sockaddr_in *s_in);
-int		init_cli(int sfd, char **cip, t_cfds *cdata);
+int		init_cli(t_cfds *cdata);
+void		server_read(t_cfds *cdata, int fd, fd_set *set);
+void		server_write(t_cfds *cdata, int fd, fd_set writefds);
 
 #endif /* !_IRC_H_ */

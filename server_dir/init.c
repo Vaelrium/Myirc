@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:43:25 2015 Rémi DURAND
-** Last update Tue Apr  7 15:17:18 2015 Rémi DURAND
+** Last update Wed Apr  8 13:51:32 2015 Rémi DURAND
 */
 
 #include "irc.h"
@@ -22,53 +22,132 @@ int		init_serv(struct protoent **pe, char **av,
   return (0);
 }
 
-void		get_maxfds(t_cfds *cdata)
+
+void		client_read(t_cfds *e, int fd, fd_set *set)
 {
-  int		v;
-  int		fds;
+  int		r;
+  char		buf[4096];
+  int		i;
+
+  r = read(fd, buf, 4096);
+  if (r > 0)
+    {
+      buf[r] = '\0';
+      printf("%d: %s\n", fd, buf);
+      i = 0;
+      while (i < NB_QUE)
+	{
+	  if (FD_ISSET(i, set) && i != fd)
+	    write(i, buf, r);
+	  ++i;
+	}
+    }
+  else
+    {
+      printf("%d: Connection closed\n", fd);
+      close(fd);
+      e->fd_type[fd] = FD_FREE;
+    }
+}
+
+void		client_write(t_cfds *e, int fd, fd_set *writefds)
+{
+  int		r;
+  char		buf[4096];
+  int		i;
+
+  r = read(fd, buf, 4096);
+  if (r > 0)
+    {
+      buf[r] = '\0';
+      printf("%d: %s\n", fd, buf);
+      i = 0;
+      while (i < NB_QUE)
+      	 {
+      	   if (FD_ISSET(i, writefds) && i != fd)
+      	     {
+      	       printf("write on %d\n", i);
+      	       write(fd, buf, r);
+      	     }
+	   ++i;
+      	 }
+    }
+  else
+    {
+      printf("%d: Connection closed\n", fd);
+      close(fd);
+      e->fd_type[fd] = FD_FREE;
+    }
+}
+
+void			add_client(t_cfds *cdata, int s)
+{
+  int			cs;
+  struct sockaddr_in	client_sin;
+  socklen_t		client_sin_len;
+  char			*cip;
+
+  client_sin_len = sizeof(client_sin);
+  cs = accept(s, (addr_c)&client_sin, &client_sin_len);
+  if ((cip = inet_ntoa(client_sin.sin_addr)) == NULL)
+    return ;
+  printf("%s\n", cip);
+  cdata->fd_type[cs] = FD_CLIENT;
+  cdata->fct_read[cs] = client_read;
+  cdata->fct_write[cs] = client_write;
+}
+
+void		server_read(t_cfds *cdata, int fd, fd_set *set)
+{
+  printf("New client\n");
+  add_client(cdata, fd);
+  (void)set;
+}
+
+void		server_write(t_cfds *cdata, int fd, fd_set writefds)
+{
+  (void)cdata;
+  (void)fd;
+  (void)writefds;
+}
+
+void			init_set(t_cfds *cdata)
+{
+  int			v;
+  struct timeval	tv;
 
   v = 0;
-  fds = cdata->fds[0];
-  while (cdata->fds[v] != 0)
+  tv.tv_sec = 20;
+  tv.tv_usec = 0;
+  memset(cdata->fd_type, FD_FREE, NB_QUE);
+  while (v < NB_QUE)
     {
-      if (cdata->fds[v] > fds)
-	fds = cdata->fds[v];
+      if (cdata->fd_type[v] != FD_FREE)
+	{
+	  FD_SET(v, &cdata->fd_r);
+	  FD_SET(v, &cdata->fd_w);
+	  cdata->ncfd = v;
+	}
       ++v;
     }
-  cdata->nfds = ++fds;
+  if (select(cdata->ncfd + 1, &cdata->fd_r, &cdata->fd_w, NULL, &tv) == -1)
+    perror("select");
 }
 
-void		aff_msg(int cfd)
+int		init_cli(t_cfds *cdata)
 {
-  char		buff[512];
-  int		len;
+  int		v;
 
-  len = read(cfd, buff, 511);
-  write(1, buff, len);
-}
-
-int		init_cli(int sfd, char **cip, t_cfds *cdata)
-{
-  socklen_t		in_size;
-  struct sockaddr_in	in_client;
-  struct timeval	timeout;
-
-  in_size = sizeof(in_client);
-  printf("1\n");
-  if ((cdata->fds[cdata->of] = accept(sfd, (addr_c)&in_client, &in_size)) == (-1))
-    return (-1);
-  printf("2\n");
-  FD_SET(cdata->fds[cdata->of], &cdata->set);
-  cdata->fds[++cdata->of] = 0;
-  if ((*cip = inet_ntoa(in_client.sin_addr)) == NULL)
-    return (-1);
-  printf("%s\n", *cip);
-  get_maxfds(cdata);
-  timeout.tv_usec = 150000;
-  timeout.tv_sec = 0;
-
-  select(cdata->nfds, &cdata->set, &cdata->set, NULL, &timeout);
-  if (FD_ISSET(cdata->fds[0], &cdata->set))
-    aff_msg(cdata->fds[0]);
+  v = 0;
+  FD_ZERO(&cdata->fd_r);
+  FD_ZERO(&cdata->fd_w);
+  cdata->ncfd = 0;
+  init_set(cdata);
+  while (v < NB_QUE)
+    {
+      if (FD_ISSET(v, &cdata->fd_r))
+	cdata->fct_read[v](&cdata, v, &cdata->fd_w);
+      ++v;
+    }
   return (0);
 }
