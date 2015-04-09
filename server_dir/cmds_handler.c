@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Thu Apr  9 13:59:06 2015 Rémi DURAND
-** Last update Thu Apr  9 16:37:11 2015 Ambroise Coutarel
+** Last update Thu Apr  9 17:34:09 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -51,6 +51,5 @@ void		handle_cmds(t_cfds *e, char **cmd, int fd)
 	  return ;
 	}
       ++v;
-      //free_wtab(cmd);
     }
 }

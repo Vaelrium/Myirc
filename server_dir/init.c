@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:43:25 2015 Rémi DURAND
-** Last update Thu Apr  9 14:28:42 2015 Ambroise Coutarel
+** Last update Thu Apr  9 17:22:41 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -59,7 +59,7 @@ int			init_cli(t_cfds *cdata)
 	{
 	  if (FD_ISSET(v, &cdata->fd_r))
 	    {
-	      cdata->fct_read[v](cdata, v, &cdata->fd_w);
+	      cdata->fct_read[v](cdata, v);
 	    }
 	  ++v;
 	}

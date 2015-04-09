@@ -5,22 +5,23 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Wed Apr  8 15:23:57 2015 Ambroise Coutarel
-** Last update Thu Apr  9 16:52:19 2015 Rémi DURAND
+** Last update Thu Apr  9 17:28:42 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
 
-void		write_to_all(fd_set *set, int fd, char *buf, char *r)
+void		write_to_all(t_cfds *e, int fd, char *buf)
 {
-  char		id[strlen(r) + 4];
+  char		id[strlen(e->nicks[fd]) + 4];
   int		i;
 
   i = 0;
   while (i < NB_QUE)
     {
-      if (FD_ISSET(i, set) && i != fd)
+      if (FD_ISSET(i, &(e->fd_w)) && i != fd &&
+	  (strcmp(e->chan[fd], e->chan[i]) == 0))
 	{
-	  sprintf(id, "%s : ", r);
+	  sprintf(id, "%s : ", e->nicks[fd]);
 	  write(i, id, strlen(id));
 	  write(i, buf, strlen(buf));
 	}
@@ -28,7 +29,7 @@ void		write_to_all(fd_set *set, int fd, char *buf, char *r)
     }
 }
 
-void		client_read(t_cfds *e, int fd, fd_set *set)
+void		client_read(t_cfds *e, int fd)
 {
   int		r;
   char		buf[4096];
@@ -40,7 +41,7 @@ void		client_read(t_cfds *e, int fd, fd_set *set)
       if (buf[0] == '/')
 	handle_cmds(e, my_str_to_wordtab(buf), fd);
       else
-	write_to_all(set, fd, buf, e->nicks[fd]);
+	write_to_all(e, fd, buf);
       printf("%s: %s\n", e->nicks[fd], buf);
     }
   else
@@ -70,16 +71,14 @@ void			add_client(t_cfds *cdata, int s)
   cdata->fct_write[cs] = NULL;
 }
 
-void		server_read(t_cfds *cdata, int fd, fd_set *set)
+void		server_read(t_cfds *cdata, int fd)
 {
   printf("New client\n");
   add_client(cdata, fd);
-  (void)set;
 }
 
-void		server_write(t_cfds *cdata, int fd, fd_set writefds)
+void		server_write(t_cfds *cdata, int fd)
 {
   (void)cdata;
   (void)fd;
-  (void)writefds;
 }
