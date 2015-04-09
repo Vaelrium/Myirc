@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:14 2015 Rémi DURAND
-** Last update Thu Apr  9 16:08:00 2015 Ambroise Coutarel
+** Last update Thu Apr  9 16:30:27 2015 Ambroise Coutarel
 */
 
 #ifndef _IRC_H_
@@ -61,6 +61,8 @@ typedef struct	s_cfds
   fct		fct_read[NB_QUE];
   fct		fct_write[NB_QUE];
   char		*nicks[NB_QUE];
+  char		*chan[NB_QUE];
+  char		**chan_name;
   int		port;
   fd_set	fd_r;
   fd_set	fd_w;
@@ -80,10 +82,13 @@ void		server_read(t_cfds *cdata, int fd, fd_set *set);
 void		server_write(t_cfds *cdata, int fd, fd_set writefds);
 void		handle_cmds(t_cfds *e, char **cmd, int fd);
 char		**my_str_to_wordtab(char *str);
-void	subinit(t_command *cmd, char *name,
-		int (*func)(t_cfds*, char**, int));
-void	init_commands();
-void	free_wtab(char **tab);
+void		subinit(t_command *cmd, char *name,
+			int (*func)(t_cfds*, char**, int));
+void		init_commands();
+void		free_wtab(char **tab);
+void		nick(t_cfds *e, char **cmd, int fd);
+void	        join(t_cfds *e, char **cmd, int fd);
+void		list(t_cfds *e, char **cmd, int fd);
 
 extern	t_command	g_commands_server[8];
 

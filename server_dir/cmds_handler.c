@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Thu Apr  9 13:59:06 2015 Rémi DURAND
-** Last update Thu Apr  9 15:01:45 2015 Ambroise Coutarel
+** Last update Thu Apr  9 16:29:27 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -33,8 +33,6 @@ void	init_commands()
 
 void		handle_cmds(t_cfds *e, char **cmd, int fd)
 {
-  int		v;
-
   (void)e;
   (void)fd;
   v = 0;
@@ -45,7 +43,7 @@ void		handle_cmds(t_cfds *e, char **cmd, int fd)
     {
       if (strcmp(cmd[0], g_commands_server[v].command) == 0)
 	{
-	  g_commands_server[v].func(e, cmd, fd);
+	  g_commands_server[v].func(e, &(cmd[1]), fd);
 	  free_wtab(cmd);
 	  return ;
 	}
