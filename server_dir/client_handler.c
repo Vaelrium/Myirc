@@ -5,7 +5,7 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Wed Apr  8 15:23:57 2015 Ambroise Coutarel
-** Last update Thu Apr  9 17:28:42 2015 Ambroise Coutarel
+** Last update Thu Apr  9 18:46:07 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -24,6 +24,7 @@ void		write_to_all(t_cfds *e, int fd, char *buf)
 	  sprintf(id, "%s : ", e->nicks[fd]);
 	  write(i, id, strlen(id));
 	  write(i, buf, strlen(buf));
+	  write(i, "\r\n", 2);
 	}
       ++i;
     }
