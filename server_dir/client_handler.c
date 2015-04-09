@@ -5,7 +5,7 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Wed Apr  8 15:23:57 2015 Ambroise Coutarel
-** Last update Thu Apr  9 14:09:50 2015 Rémi DURAND
+** Last update Thu Apr  9 16:02:27 2015 Rémi DURAND
 */
 
 #include "irc.h"
@@ -36,11 +36,12 @@ void		client_read(t_cfds *e, int fd, fd_set *set)
   r = read(fd, buf, 4096);
   if (r > 0)
     {
+      buf[r] = '\0';
       if (buf[0] == '/')
 	handle_cmds(e, my_str_to_wordtab(buf), fd);
-      buf[r] = '\0';
+      else
+	write_to_all(set, fd, buf, e->nicks[fd]);
       printf("%s: %s\n", e->nicks[fd], buf);
-      write_to_all(set, fd, buf, e->nicks[fd]);
     }
   else
     {
@@ -63,6 +64,7 @@ void			add_client(t_cfds *cdata, int s)
     return ;
   printf("%s\n", cip);
   cdata->nicks[cs] = cip;
+  cdata->chan[cs] = strdup("Default Channel");
   cdata->fd_type[cs] = FD_CLIENT;
   cdata->fct_read[cs] = client_read;
   cdata->fct_write[cs] = NULL;

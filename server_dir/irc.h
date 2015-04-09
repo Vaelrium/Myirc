@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:14 2015 Rémi DURAND
-** Last update Thu Apr  9 14:11:02 2015 Rémi DURAND
+** Last update Thu Apr  9 14:59:19 2015 Rémi DURAND
 */
 
 #ifndef _IRC_H_
@@ -42,6 +42,8 @@ typedef struct	s_cfds
   fct		fct_read[NB_QUE];
   fct		fct_write[NB_QUE];
   char		*nicks[NB_QUE];
+  char		*chan[NB_QUE];
+  char		**chan_name;
   int		port;
   fd_set	fd_r;
   fd_set	fd_w;
@@ -55,5 +57,8 @@ void		server_read(t_cfds *cdata, int fd, fd_set *set);
 void		server_write(t_cfds *cdata, int fd, fd_set writefds);
 void		handle_cmds(t_cfds *e, char **cmd, int fd);
 char		**my_str_to_wordtab(char *str);
+void		nick(t_cfds *e, char **cmd, int fd);
+void	        join(t_cfds *e, char **cmd, int fd);
+void		list(t_cfds *e, char **cmd, int fd);
 
 #endif /* !_IRC_H_ */
