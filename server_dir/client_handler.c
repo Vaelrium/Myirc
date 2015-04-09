@@ -5,7 +5,7 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Wed Apr  8 15:23:57 2015 Ambroise Coutarel
-** Last update Thu Apr  9 16:02:27 2015 Rémi DURAND
+** Last update Thu Apr  9 16:39:24 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -36,7 +36,7 @@ void		client_read(t_cfds *e, int fd, fd_set *set)
   r = read(fd, buf, 4096);
   if (r > 0)
     {
-      buf[r] = '\0';
+      buf[r - 1] = '\0';
       if (buf[0] == '/')
 	handle_cmds(e, my_str_to_wordtab(buf), fd);
       else

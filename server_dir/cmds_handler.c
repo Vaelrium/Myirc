@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Thu Apr  9 13:59:06 2015 Rémi DURAND
-** Last update Thu Apr  9 16:29:27 2015 Ambroise Coutarel
+** Last update Thu Apr  9 16:37:11 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -13,7 +13,7 @@
 t_command	g_commands_server[8];
 
 void	subinit(t_command *cmd, char *name,
-		int (*func)(t_cfds*, char**, int))
+		void (*func)(t_cfds*, char**, int))
 {
   cmd->command = strdup(name);
   cmd->func = func;
@@ -33,6 +33,7 @@ void	init_commands()
 
 void		handle_cmds(t_cfds *e, char **cmd, int fd)
 {
+  int		v;
   (void)e;
   (void)fd;
   v = 0;
@@ -41,8 +42,10 @@ void		handle_cmds(t_cfds *e, char **cmd, int fd)
   /*   printf("%s\n", cmd[v++]); */
   while (v != CMD_SERV)
     {
+      printf("%s\n%s\n", cmd[0], g_commands_server[v].command);
       if (strcmp(cmd[0], g_commands_server[v].command) == 0)
 	{
+	  printf("command found\n");
 	  g_commands_server[v].func(e, &(cmd[1]), fd);
 	  free_wtab(cmd);
 	  return ;

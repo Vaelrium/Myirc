@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:14 2015 Rémi DURAND
-** Last update Thu Apr  9 16:30:27 2015 Ambroise Coutarel
+** Last update Thu Apr  9 16:31:54 2015 Ambroise Coutarel
 */
 
 #ifndef _IRC_H_
@@ -72,7 +72,7 @@ typedef struct	s_cfds
 typedef struct		s_command
 {
   char			*command;
-  int			(*func)(t_cfds *e, char **cmd, int fd);
+  void			(*func)(t_cfds *e, char **cmd, int fd);
 }			t_command;
 
 int		init_serv(struct protoent **pe, char **av,
@@ -83,7 +83,7 @@ void		server_write(t_cfds *cdata, int fd, fd_set writefds);
 void		handle_cmds(t_cfds *e, char **cmd, int fd);
 char		**my_str_to_wordtab(char *str);
 void		subinit(t_command *cmd, char *name,
-			int (*func)(t_cfds*, char**, int));
+			void (*func)(t_cfds*, char**, int));
 void		init_commands();
 void		free_wtab(char **tab);
 void		nick(t_cfds *e, char **cmd, int fd);
