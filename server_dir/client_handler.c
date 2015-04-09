@@ -5,7 +5,7 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Wed Apr  8 15:23:57 2015 Ambroise Coutarel
-** Last update Thu Apr  9 18:46:07 2015 Ambroise Coutarel
+** Last update Thu Apr  9 18:48:18 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -66,7 +66,7 @@ void			add_client(t_cfds *cdata, int s)
     return ;
   printf("%s\n", cip);
   cdata->nicks[cs] = strdup(cip);
-  cdata->chan[cs] = strdup("Default Channel");
+  cdata->chan[cs] = strdup("DefaultChannel");
   cdata->fd_type[cs] = FD_CLIENT;
   cdata->fct_read[cs] = client_read;
   cdata->fct_write[cs] = NULL;

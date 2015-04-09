@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Thu Apr  9 13:59:06 2015 Rémi DURAND
-** Last update Thu Apr  9 17:34:09 2015 Ambroise Coutarel
+** Last update Thu Apr  9 18:32:35 2015 Rémi DURAND
 */
 
 #include "irc.h"
@@ -24,8 +24,8 @@ void	init_commands()
   subinit(&(g_commands_server[0]), "/nick", &nick);
   subinit(&(g_commands_server[1]), "/list", &list);
   subinit(&(g_commands_server[2]), "/join", &join);
-  /* subinit(&(g_commands_server[3]), "/part", &part); */
-  /* subinit(&(g_commands_server[4]), "/users", &users); */
+  subinit(&(g_commands_server[3]), "/part", &part);
+  subinit(&(g_commands_server[4]), "/users", &users);
   /* subinit(&(g_commands_server[5]), "/msg", &msg); */
   /* subinit(&(g_commands_server[6]), "/send_file", &send_file); */
   /* subinit(&(g_commands_server[7]), "/accept_file", &accept_file); */
@@ -34,18 +34,13 @@ void	init_commands()
 void		handle_cmds(t_cfds *e, char **cmd, int fd)
 {
   int		v;
-  (void)e;
-  (void)fd;
+
   v = 0;
   init_commands();
-  /* while (cmd[v]) */
-  /*   printf("%s\n", cmd[v++]); */
   while (v != CMD_SERV)
     {
-      printf("%s\n%s\n", cmd[0], g_commands_server[v].command);
       if (strcmp(cmd[0], g_commands_server[v].command) == 0)
 	{
-	  printf("command found\n");
 	  g_commands_server[v].func(e, &(cmd[1]), fd);
 	  free_wtab(cmd);
 	  return ;

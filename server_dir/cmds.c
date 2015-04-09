@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Thu Apr  9 14:23:25 2015 Rémi DURAND
-** Last update Thu Apr  9 17:16:53 2015 Rémi DURAND
+** Last update Thu Apr  9 18:00:24 2015 Rémi DURAND
 */
 
 #include "irc.h"
@@ -103,7 +103,7 @@ void		list(t_cfds *e, char **cmd, int fd)
 
   if (cmd[0] && cmd[1])
     {
-      write(fd, "Error, too many arguments\r\n", 29);
+      write(fd, "Error, too many arguments\r\n", 27);
       return ;
     }
   make_list_msg(cmd[0], e, &msg);
