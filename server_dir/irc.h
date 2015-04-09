@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:14 2015 Rémi DURAND
-** Last update Thu Apr  9 16:31:54 2015 Ambroise Coutarel
+** Last update Thu Apr  9 17:28:51 2015 Rémi DURAND
 */
 
 #ifndef _IRC_H_
@@ -89,6 +89,7 @@ void		free_wtab(char **tab);
 void		nick(t_cfds *e, char **cmd, int fd);
 void	        join(t_cfds *e, char **cmd, int fd);
 void		list(t_cfds *e, char **cmd, int fd);
+void	        part(t_cfds *e, char **cmd, int fd);
 
 extern	t_command	g_commands_server[8];
 
