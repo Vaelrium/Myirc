@@ -5,28 +5,30 @@
 ## Login   <durand_u@epitech.net>
 ## 
 ## Started on  Mon Apr  6 12:44:38 2015 Rémi DURAND
-## Last update Wed Apr  8 15:45:47 2015 Ambroise Coutarel
+## Last update Thu Apr  9 14:13:43 2015 Rémi DURAND
 ##
 
-SRC_SERVER      =       ./server_dir/irc.c                   \
-			./server_dir/init.c                   \
-			./server_dir/client_handler.c
+SRC_SERVER	=	./server_dir/irc.c			\
+			./server_dir/init.c			\
+			./server_dir/client_handler.c		\
+			./server_dir/my_str_to_wordtab.c	\
+			./server_dir/cmds_handler.c
 
-#SRC_CLIENT      =
+#SRC_CLIENT	=
 
-CC              =       gcc
+CC		=	gcc
 
-RM              =       rm -f
+RM		=	rm -f
 
-OBJ_SERVER      =       $(SRC_SERVER:.c=.o)
+OBJ_SERVER	=	$(SRC_SERVER:.c=.o)
 
-#OBJ_CLIENT      =       $(SRC_CLIENT:.c=.o)
+#OBJ_CLIENT	=	$(SRC_CLIENT:.c=.o)
 
-NAME_SERVER     =       server
+NAME_SERVER	=	server
 
-#NAME_CLIENT     =       client
+#NAME_CLIENT	=	client
 
-CFLAGS          +=      -Wall -Wextra -Werror -g3
+CFLAGS		+=	-Wall -Wextra -Werror -g3
 
 all: $(NAME_SERVER)# $(NAME_CLIENT)
 
@@ -37,11 +39,11 @@ $(NAME_SERVER): $(OBJ_SERVER)
 #	$(CC) -o $(NAME_CLIENT) $(OBJ_CLIENT) $(CFLAGS)
 
 clean:
-	$(RM) $(OBJ_SERVER) 
+	$(RM) $(OBJ_SERVER)
 # $(OBJ_CLIENT)
 
 fclean: clean
-	$(RM) $(NAME_SERVER) 
+	$(RM) $(NAME_SERVER)
 # $(NAME_CLIENT)
 
 re: fclean all
