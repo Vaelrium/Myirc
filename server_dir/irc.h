@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:14 2015 Rémi DURAND
-** Last update Thu Apr  9 17:28:51 2015 Rémi DURAND
+** Last update Thu Apr  9 18:33:01 2015 Rémi DURAND
 */
 
 #ifndef _IRC_H_
@@ -31,16 +31,16 @@
 # define FD_FREE 0
 # define FD_CLIENT 1
 # define FD_SERVER 2
-# define CMD_SERV 3 // à augmenter au fur et à mesure des implementations
+# define CMD_SERV 5
 
 /*
 ** NICK
 */
 
-# define ERR_NONICKNAMEGIVEN "431" // pas de paramètre pour /nick
-# define ERR_ERRONEUSNICKNAME "432" // nickname contient chars invalides
-# define ERR_NICKNAMEINUSE "433" //
-# define ERR_NICKCOLLISION "436" // redondant avec nicknameinuse ?
+# define ERR_NONICKNAMEGIVEN "431"
+# define ERR_ERRONEUSNICKNAME "432"
+# define ERR_NICKNAMEINUSE "433"
+# define ERR_NICKCOLLISION "436"
 # define ERR_NEEDMOREPARAMS "461"
 # define ERR_INVITEONLYCHAN "743"
 # define ERR_CHANNELISFULL "471"
@@ -69,17 +69,17 @@ typedef struct	s_cfds
   int		ncfd;
 }		t_cfds;
 
-typedef struct		s_command
+typedef struct	s_command
 {
-  char			*command;
-  void			(*func)(t_cfds *e, char **cmd, int fd);
-}			t_command;
+  char		*command;
+  void		(*func)(t_cfds *e, char **cmd, int fd);
+}		t_command;
 
 int		init_serv(struct protoent **pe, char **av,
 			  struct sockaddr_in *s_in);
 int		init_cli(t_cfds *cdata);
-void		server_read(t_cfds *cdata, int fd, fd_set *set);
-void		server_write(t_cfds *cdata, int fd, fd_set writefds);
+void		server_read(t_cfds *cdata, int fd);
+void		server_write(t_cfds *cdata, int fd);
 void		handle_cmds(t_cfds *e, char **cmd, int fd);
 char		**my_str_to_wordtab(char *str);
 void		subinit(t_command *cmd, char *name,
@@ -87,9 +87,10 @@ void		subinit(t_command *cmd, char *name,
 void		init_commands();
 void		free_wtab(char **tab);
 void		nick(t_cfds *e, char **cmd, int fd);
-void	        join(t_cfds *e, char **cmd, int fd);
+void		join(t_cfds *e, char **cmd, int fd);
 void		list(t_cfds *e, char **cmd, int fd);
-void	        part(t_cfds *e, char **cmd, int fd);
+void		part(t_cfds *e, char **cmd, int fd);
+void		users(t_cfds *e, char **cmd, int fd);
 
 extern	t_command	g_commands_server[8];
 
