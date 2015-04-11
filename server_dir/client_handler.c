@@ -5,7 +5,7 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Wed Apr  8 15:23:57 2015 Ambroise Coutarel
-** Last update Thu Apr  9 18:48:18 2015 Ambroise Coutarel
+** Last update Sat Apr 11 13:48:40 2015 Rémi DURAND
 */
 
 #include "irc.h"
@@ -75,6 +75,7 @@ void			add_client(t_cfds *cdata, int s)
 void		server_read(t_cfds *cdata, int fd)
 {
   printf("New client\n");
+  write(fd, "Myirc durand_u/coutar_a V.1 connected\r\n", 39);
   add_client(cdata, fd);
 }
 
