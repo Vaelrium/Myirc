@@ -5,7 +5,7 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Wed Apr  8 15:23:57 2015 Ambroise Coutarel
-** Last update Sat Apr 11 13:48:40 2015 Rémi DURAND
+** Last update Sat Apr 11 13:59:02 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -64,6 +64,7 @@ void			add_client(t_cfds *cdata, int s)
   cs = accept(s, (addr_c)&client_sin, &client_sin_len);
   if ((cip = inet_ntoa(client_sin.sin_addr)) == NULL)
     return ;
+  write(cs, "Myirc durand_u/coutar_a V.1 connected\r\n", 39);
   printf("%s\n", cip);
   cdata->nicks[cs] = strdup(cip);
   cdata->chan[cs] = strdup("DefaultChannel");
@@ -75,7 +76,6 @@ void			add_client(t_cfds *cdata, int s)
 void		server_read(t_cfds *cdata, int fd)
 {
   printf("New client\n");
-  write(fd, "Myirc durand_u/coutar_a V.1 connected\r\n", 39);
   add_client(cdata, fd);
 }
 
