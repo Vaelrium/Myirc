@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:45 2015 Rémi DURAND
-** Last update Thu Apr  9 18:29:23 2015 Rémi DURAND
+** Last update Thu Apr  9 20:17:43 2015 Rémi DURAND
 */
 
 #include "irc.h"
@@ -25,6 +25,9 @@ int	cdata_set(t_cfds *cdata, int sfd)
   cdata->chan_name[1] = NULL;
   while (v != NB_QUE)
     cdata->chan[v++] = NULL;
+  v = 0;
+  while (v != NB_QUE)
+    cdata->nicks[v++] = NULL;
   return (0);
 }
 

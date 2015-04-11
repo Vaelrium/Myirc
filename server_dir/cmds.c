@@ -5,17 +5,29 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Thu Apr  9 14:23:25 2015 Rémi DURAND
-** Last update Thu Apr  9 18:00:24 2015 Rémi DURAND
+** Last update Thu Apr  9 20:19:26 2015 Rémi DURAND
 */
 
 #include "irc.h"
 
 void		nick(t_cfds *e, char **cmd, int fd)
 {
+  int		v;
+
+  v = 0;
   if (!cmd[0] || cmd[1])
     {
       write(fd, "Error, none or too many arguments\r\n", 36);
       return ;
+    }
+  while (v != NB_QUE)
+    {
+      if (e->nicks[v] && strcmp(e->nicks[v], cmd[0]) == 0)
+	{
+	  write(fd, "Error, nickname already taken\r\n", 31);
+	  return ;
+	}
+      ++v;
     }
   free(e->nicks[fd]);
   e->nicks[fd] = strdup(cmd[0]);

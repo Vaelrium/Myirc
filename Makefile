@@ -5,7 +5,7 @@
 ## Login   <durand_u@epitech.net>
 ## 
 ## Started on  Mon Apr  6 12:44:38 2015 Rémi DURAND
-## Last update Thu Apr  9 17:41:41 2015 Rémi DURAND
+## Last update Sat Apr 11 11:19:05 2015 Rémi DURAND
 ##
 
 SRC_SERVER	=	./server_dir/irc.c			\
@@ -14,7 +14,8 @@ SRC_SERVER	=	./server_dir/irc.c			\
 			./server_dir/my_str_to_wordtab.c	\
 			./server_dir/cmds_handler.c		\
 			./server_dir/cmds.c			\
-			./server_dir/cmds2.c
+			./server_dir/cmds2.c			\
+			./server_dir/cmds3.c
 
 #SRC_CLIENT	=
 

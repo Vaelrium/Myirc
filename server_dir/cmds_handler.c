@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Thu Apr  9 13:59:06 2015 Rémi DURAND
-** Last update Thu Apr  9 18:32:35 2015 Rémi DURAND
+** Last update Sat Apr 11 11:31:02 2015 Rémi DURAND
 */
 
 #include "irc.h"
@@ -26,9 +26,9 @@ void	init_commands()
   subinit(&(g_commands_server[2]), "/join", &join);
   subinit(&(g_commands_server[3]), "/part", &part);
   subinit(&(g_commands_server[4]), "/users", &users);
-  /* subinit(&(g_commands_server[5]), "/msg", &msg); */
-  /* subinit(&(g_commands_server[6]), "/send_file", &send_file); */
-  /* subinit(&(g_commands_server[7]), "/accept_file", &accept_file); */
+  subinit(&(g_commands_server[5]), "/msg", &msg);
+  subinit(&(g_commands_server[6]), "/send_file", &send_file);
+  subinit(&(g_commands_server[7]), "/accept_file", &accept_file);
 }
 
 void		handle_cmds(t_cfds *e, char **cmd, int fd)

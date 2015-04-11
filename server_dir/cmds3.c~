@@ -1,0 +1,11 @@
+/*
+** cmds3.c for cmds3 in /home/durand_u/github/Myirc/server_dir
+** 
+** Made by Rémi DURAND
+** Login   <durand_u@epitech.net>
+** 
+** Started on  Sat Apr 11 10:56:59 2015 Rémi DURAND
+** Last update Sat Apr 11 10:57:07 2015 Rémi DURAND
+*/
+
+#include "irc.h"

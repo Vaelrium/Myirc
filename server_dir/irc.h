@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:14 2015 Rémi DURAND
-** Last update Thu Apr  9 18:33:01 2015 Rémi DURAND
+** Last update Sat Apr 11 11:30:30 2015 Rémi DURAND
 */
 
 #ifndef _IRC_H_
@@ -31,7 +31,7 @@
 # define FD_FREE 0
 # define FD_CLIENT 1
 # define FD_SERVER 2
-# define CMD_SERV 5
+# define CMD_SERV 8
 
 /*
 ** NICK
@@ -91,6 +91,9 @@ void		join(t_cfds *e, char **cmd, int fd);
 void		list(t_cfds *e, char **cmd, int fd);
 void		part(t_cfds *e, char **cmd, int fd);
 void		users(t_cfds *e, char **cmd, int fd);
+void		msg(t_cfds *e, char **cmd, int fd);
+void		accept_file(t_cfds *e, char **cmd, int fd);
+void	        send_file(t_cfds *e, char **cmd, int fd);
 
 extern	t_command	g_commands_server[8];
 
