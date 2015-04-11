@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Thu Apr  9 17:27:25 2015 Rémi DURAND
-** Last update Sat Apr 11 11:50:00 2015 Rémi DURAND
+** Last update Sat Apr 11 13:52:05 2015 Rémi DURAND
 */
 
 #include "irc.h"
@@ -23,6 +23,7 @@ void	        part(t_cfds *e, char **cmd, int fd)
       write(fd, "Cannot leave unjoined channel\r\n", 31);
       return ;
     }
+  write(fd, "Channel quit\r\n", 16);
   if (e->chan[fd])
     free(e->chan[fd]);
   e->chan[fd] = strdup("DefaultChannel");
@@ -114,4 +115,5 @@ void		msg(t_cfds *e, char **cmd, int fd)
       return ;
     }
   send_msg(target_fd, e->nicks[fd], &cmd[1]);
+  write(fd, "Message sent\r\n", 14);
 }
