@@ -5,7 +5,7 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Wed Apr  8 15:23:57 2015 Ambroise Coutarel
-** Last update Sat Apr 11 13:48:40 2015 Rémi DURAND
+** Last update Sat Apr 11 14:15:47 2015 Rémi DURAND
 */
 
 #include "irc.h"
@@ -18,7 +18,7 @@ void		write_to_all(t_cfds *e, int fd, char *buf)
   i = 0;
   while (i < NB_QUE)
     {
-      if (FD_ISSET(i, &(e->fd_w)) && i != fd &&
+      if (FD_ISSET(i, &(e->fd_w)) &&
 	  (strcmp(e->chan[fd], e->chan[i]) == 0))
 	{
 	  sprintf(id, "%s : ", e->nicks[fd]);
