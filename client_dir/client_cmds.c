@@ -5,7 +5,7 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Thu Apr  9 20:44:57 2015 Ambroise Coutarel
-** Last update Sun Apr 12 13:26:15 2015 Ambroise Coutarel
+** Last update Sun Apr 12 14:06:32 2015 Ambroise Coutarel
 */
 
 #include "irc_client.h"
@@ -75,25 +75,15 @@ void		recv_file(int *socket, int nfd)
 
 void		accept_file(char **cmd, int *socket, char *is_connected)
 {
-  int		len;
   int		nfd;
-  char		*file;
 
-  len = 0;
   if ((*is_connected))
     {
-      while (!len && ioctl((*socket), FIONREAD, &len) >= 0)
-	usleep(3000);
-      if ((file = malloc(sizeof(char) * len)) == NULL)
-	return ;
-      read((*socket), file, len);
-      if ((nfd = open(cmd[1], O_CREAT | O_RDWR, 0666)) == (-1))
+      if ((nfd = open(cmd[0], O_CREAT | O_RDWR, 0666)) == (-1))
 	{
 	  write((*socket), "Failed to open file\r\n", 21);
 	  return ;
 	}
       recv_file(socket, nfd);
-      printf("File %s : download complete\n", file);
-      free(file);
-    }
+      }
 }
