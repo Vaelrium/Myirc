@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Sat Apr 11 10:56:59 2015 Rémi DURAND
-** Last update Sun Apr 12 13:51:10 2015 Ambroise Coutarel
+** Last update Sun Apr 12 13:56:46 2015 Rémi DURAND
 */
 
 #include "irc.h"
@@ -63,14 +63,14 @@ int		write_file(int cfd, int fd)
   return (0);
 }
 
-void		invite_file(char *nick, t_cfds *e)
+void		invite_file(char *nick, t_cfds *e, int fd)
 {
   int		v;
   char		*invit;
 
-  if ((invit = malloc(sizeof(char) * (24 + strlen(nick) + 1))) == NULL)
+  if ((invit = malloc(sizeof(char) * (24 + strlen(e->nicks[fd]) + 1))) == NULL)
     return ;
-  sprintf(invit, "Available file from : \"%s\"", nick);
+  sprintf(invit, "Available file from : \"%s\"", e->nicks[fd]);
   v = 0;
   while (v != NB_QUE)
     {
@@ -100,7 +100,7 @@ void	        send_file(t_cfds *e, char **cmd, int fd)
       return ;
     }
   write_file(fd, nfd);
-  invite_file(cmd[0], e);
+  invite_file(cmd[0], e, fd);
   write(fd, "File tranfered\r\n", 16);
   return ;
 }
