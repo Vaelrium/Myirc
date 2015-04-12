@@ -5,7 +5,7 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Thu Apr  9 18:11:49 2015 Ambroise Coutarel
-** Last update Sat Apr 11 13:49:35 2015 Ambroise Coutarel
+** Last update Sat Apr 11 18:48:17 2015 Ambroise Coutarel
 */
 
 #ifndef IRC_CLIENT_H_
@@ -27,9 +27,11 @@
 # include <netinet/in.h>
 # include <arpa/inet.h>
 # include <dirent.h>
+# include <time.h>
 
 # define PROMPT ">"
 
+# define CLIENT_CMD 3
 typedef struct sockaddr* sock;
 
 typedef struct	s_client_com
@@ -48,6 +50,9 @@ void	accept_file(char **cmd, int *socket, char *is_connected);
 void	free_wtab(char **wordtab);
 char	**my_str_to_wordtab(char *str);
 void	handle_cmds(char *query, int *server_socket, char* is_connected);
+void	send_file(char **cmd, int *socket, char *is_connected);
+int	server_response(int fd);
+void	send_to_serv(char *query, int *server_socket);
 
 extern	t_client_com	g_commands_client[3];
 # endif /* !IRC_CLIENT_H_ */

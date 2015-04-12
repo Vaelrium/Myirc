@@ -5,7 +5,7 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Thu Apr  9 20:33:21 2015 Ambroise Coutarel
-** Last update Sat Apr 11 13:51:52 2015 Ambroise Coutarel
+** Last update Sat Apr 11 18:54:42 2015 Ambroise Coutarel
 */
 
 #include "irc_client.h"
@@ -15,11 +15,18 @@ t_client_com	g_commands_client[3];
 int		server_response(int fd)
 {
   int		len;
+  int		timeout;
   char		*resp;
 
   len = 0;
+  timeout = 1;
   while (!len && ioctl(fd, FIONREAD, &len) >= 0)
-    usleep(3000);
+    {
+      if (timeout == 10)
+	return (-1);
+      usleep(3000);
+      ++timeout;
+    }
   if ((resp = malloc(sizeof(char) * (len + 1))) == NULL)
     {
       printf("Unable to malloc response\n");
@@ -57,20 +64,20 @@ void		handle_cmds(char *query, int *server_socket, char *is_connected)
   int		v;
 
   v = 0;
-  init_commands();
   cmd = my_str_to_wordtab(query);
-  while (v != 3)
+  while (v != CLIENT_CMD)
     {
       if (strcmp(cmd[0], g_commands_client[v].command) == 0)
   	{
-  	  g_commands_client[v].func(&(cmd[1]), server_socket, is_connected);
+	  // if (cmd[1])
+	    g_commands_client[v].func(&(cmd[1]), server_socket, is_connected);
 	  //server_response((*server_socket));
   	  free_wtab(cmd);
   	  return ;
   	}
       ++v;
     }
-  if ((*server_socket) != -1)
+  if ((*server_socket) != -1 && (*is_connected) == 1)
     {
       send_to_serv(query, server_socket);
       server_response((*server_socket));

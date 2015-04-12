@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Mon Apr  6 12:39:45 2015 Rémi DURAND
-** Last update Thu Apr  9 20:17:43 2015 Rémi DURAND
+** Last update Sat Apr 11 18:36:23 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
