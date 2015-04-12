@@ -5,7 +5,7 @@
 ** Login   <durand_u@epitech.net>
 ** 
 ** Started on  Sat Apr 11 10:56:59 2015 Rémi DURAND
-** Last update Sat Apr 11 11:40:12 2015 Rémi DURAND
+** Last update Sun Apr 12 13:51:10 2015 Ambroise Coutarel
 */
 
 #include "irc.h"
@@ -89,7 +89,7 @@ void	        send_file(t_cfds *e, char **cmd, int fd)
   int		nfd;
 
   (void)e;
-  if (!cmd[0] || !cmd[1] || cmd[2] || !(path = make_path(cmd[0], "./")))
+  if (!cmd[0] || !cmd[1] || cmd[2] || !(path = make_path(e->nicks[fd], "./")))
     {
       write(fd, "Error, none or too many arguments\r\n", 36);
       return ;

@@ -5,7 +5,7 @@
 ** Login   <ganesha@epitech.net>
 **
 ** Started on  Thu Apr  9 20:33:21 2015 Ambroise Coutarel
-** Last update Sat Apr 11 18:54:42 2015 Ambroise Coutarel
+** Last update Sun Apr 12 13:41:15 2015 Ambroise Coutarel
 */
 
 #include "irc_client.h"
@@ -69,9 +69,9 @@ void		handle_cmds(char *query, int *server_socket, char *is_connected)
     {
       if (strcmp(cmd[0], g_commands_client[v].command) == 0)
   	{
-	  // if (cmd[1])
-	    g_commands_client[v].func(&(cmd[1]), server_socket, is_connected);
-	  //server_response((*server_socket));
+	  if ((*server_socket) != -1 && (*is_connected) == 1)
+	    send_to_serv(query, server_socket);
+	  g_commands_client[v].func(&(cmd[1]), server_socket, is_connected);
   	  free_wtab(cmd);
   	  return ;
   	}
